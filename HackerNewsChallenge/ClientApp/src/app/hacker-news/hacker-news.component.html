@@ -1,0 +1,27 @@
+<h1 class="grid">Hacker News Top Stories</h1>
+
+<div>
+<input #box placeholder="search stories" (keyup)="searchStories(box.value)"/>
+<button (click)="clearSearch(); box.value=''">Clear Search</button>
+<p *ngIf="!stories"><em>Loading...</em></p>
+<table class='table' *ngIf="stories">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Url</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let story of filteredStories | paginate: { itemsPerPage: 15, currentPage: p }" (click)="openWindow(story)">
+      <td>{{ story.title || "" }}</td>
+      <td>{{ story.by || "" }}</td>
+      <td>{{ story.url || "" }}</td>
+      <td>{{ (story.time * 1000 | date) || "" }}</td>
+    </tr>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+  </tbody>
+</table>
+</div>
